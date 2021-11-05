@@ -12,10 +12,17 @@ class Data extends Component {
         }
         // initilize method
         FetchUsers(props.match.params.id).then((res)=>{
-            this.setState(res.data)
+            this.setState( {user: res.data} )
             console.log('the data', res.data);
         })
     }
+
+    GoFetchOneUser(data) {
+        this.props.history.push({
+            pathname: `/specific/${data}`
+        })
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -25,7 +32,10 @@ class Data extends Component {
                         <div className="row">
 
                         {this.state.user.map( user => (
-                            <div className="col-md-3 cp">
+                            <div className="col-md-3 cp" 
+                            key={ user.login }
+                            onClick={()=> {this.GoFetchOneUser(user.login)}}
+                            >
                                 <div className="card mb-4 shadow-sm">
                                     <img className="bd-placeholder-img card-img-top" 
                                         width="100%" height="225" 
